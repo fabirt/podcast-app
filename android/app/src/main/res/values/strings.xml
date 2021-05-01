@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Listen Notes</string>
+    <string name="get_started">Get Started</string>
+    <string name="welcome_title">Say it with\nPodcast</string>
+    <string name="trending_now">Trending Now</string>
+    <string name="podcast_thumbnail">Podcast thumbnail</string>
+    <string name="back">back</string>
+    <string name="play">Play</string>
+    <string name="share">Share</string>
+</resources>

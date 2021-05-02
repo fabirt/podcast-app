@@ -44,6 +44,11 @@ fun PodcastDetailScreen(
             }
 
             if (podcast != null) {
+                val playButtonText =
+                    if (playerViewModel.podcastisPlaying &&
+                        playerViewModel.currentPlayingEpisode.value?.id == podcast.id
+                    ) stringResource(R.string.pause) else stringResource(R.string.play)
+
                 Column(
                     modifier = Modifier
                         .verticalScroll(scrollState)
@@ -78,10 +83,9 @@ fun PodcastDetailScreen(
 
                     Row {
                         PrimaryButton(
-                            text = stringResource(R.string.play),
+                            text = playButtonText,
                             height = 48.dp
                         ) {
-                            // Play
                             playerViewModel.playPodcast(
                                 (podcastSearchViewModel.podcastSearch as Resource.Success).data.results,
                                 podcast

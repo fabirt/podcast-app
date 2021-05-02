@@ -13,4 +13,5 @@
     <string name="share_podcast_content">Take a look at this podcast: %1$s %2$s</string>
     <string name="playback_notification_channel_name">Podcasts</string>
     <string name="playback_notification_channel_description">Playback notification for Listen Notes</string>
+    <string name="pause">Pause</string>
 </resources>

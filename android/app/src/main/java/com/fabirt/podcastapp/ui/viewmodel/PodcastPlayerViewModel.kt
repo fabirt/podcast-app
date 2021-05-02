@@ -23,7 +23,15 @@ class PodcastPlayerViewModel @Inject constructor(
 
     fun playPodcast(episodes: List<Episode>, currentEpisode: Episode) {
         serviceConnection.playPodcast(episodes)
-        serviceConnection.transportControls.playFromMediaId(currentEpisode.id, null)
+        if (currentEpisode.id == currentPlayingEpisode.value?.id) {
+            if (podcastisPlaying) {
+                serviceConnection.transportControls.pause()
+            } else {
+                serviceConnection.transportControls.play()
+            }
+        } else {
+            serviceConnection.transportControls.playFromMediaId(currentEpisode.id, null)
+        }
     }
 
     fun tooglePlaybackState() {

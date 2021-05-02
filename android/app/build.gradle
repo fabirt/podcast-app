@@ -85,4 +85,11 @@ dependencies {
 
     // Preferences DataStore
     implementation "androidx.datastore:datastore-preferences:1.0.0-beta01"
+
+    // ExoPlayer
+    implementation "com.google.android.exoplayer:exoplayer:$exo_player_version"
+    implementation "com.google.android.exoplayer:extension-mediasession:$exo_player_version"
+
+    // Glide image loading
+    implementation "com.github.bumptech.glide:glide:$glide_version"
 }

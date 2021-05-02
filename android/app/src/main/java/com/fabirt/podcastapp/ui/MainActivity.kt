@@ -10,6 +10,7 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.fabirt.podcastapp.R
+import com.fabirt.podcastapp.constant.K
 import com.fabirt.podcastapp.ui.common.ProvideMultiViewModel
 import com.fabirt.podcastapp.ui.home.HomeScreen
 import com.fabirt.podcastapp.ui.navigation.Destination
@@ -30,8 +31,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_PodcastApp)
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        var startDestination = Destination.welcome
+        if (intent?.action == K.ACTION_PODCAST_NOTIFICATION_CLICK) {
+            startDestination = Destination.home
+        }
         setContent {
-            PodcastApp()
+            PodcastApp(startDestination = startDestination)
         }
     }
 }
@@ -39,12 +44,14 @@ class MainActivity : ComponentActivity() {
 @ExperimentalFoundationApi
 @ExperimentalAnimationApi
 @Composable
-fun PodcastApp() {
+fun PodcastApp(
+    startDestination: String = Destination.welcome
+) {
     PodcastAppTheme {
         ProvideWindowInsets {
             ProvideMultiViewModel {
                 ProvideNavHostController {
-                    NavHost(Navigator.current, startDestination = Destination.welcome) {
+                    NavHost(Navigator.current, startDestination) {
                         composable(Destination.welcome) { WelcomeScreen() }
 
                         composable(Destination.home) {

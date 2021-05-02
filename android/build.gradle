@@ -6,6 +6,8 @@ buildscript {
         room_version = "2.2.6"
         hilt_version = "2.35"
         retrofit_version = "2.9.0"
+        exo_player_version = "2.13.3"
+        glide_version = "4.11.0"
     }
     repositories {
         google()

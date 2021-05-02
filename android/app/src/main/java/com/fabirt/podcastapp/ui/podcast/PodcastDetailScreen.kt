@@ -1,5 +1,7 @@
 package com.fabirt.podcastapp.ui.podcast
 
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -17,11 +19,14 @@ import com.fabirt.podcastapp.ui.common.BackButton
 import com.fabirt.podcastapp.ui.common.EmphasisText
 import com.fabirt.podcastapp.ui.common.PrimaryButton
 import com.fabirt.podcastapp.ui.common.ViewModelProvider
+import com.fabirt.podcastapp.util.Resource
 import com.fabirt.podcastapp.util.formatMillisecondsAsDate
 import com.fabirt.podcastapp.util.toDurationMinutes
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
 
+@ExperimentalAnimationApi
+@ExperimentalFoundationApi
 @Composable
 fun PodcastDetailScreen(
     podcastId: String,
@@ -29,6 +34,7 @@ fun PodcastDetailScreen(
     val scrollState = rememberScrollState()
     val podcastSearchViewModel = ViewModelProvider.podcastSearch
     val detailViewModel = ViewModelProvider.podcastDetail
+    val playerViewModel = ViewModelProvider.podcastPlayer
     val podcast = podcastSearchViewModel.getPodcastDetail(podcastId)
     val currentContext = LocalContext.current
 
@@ -78,6 +84,10 @@ fun PodcastDetailScreen(
                             height = 48.dp
                         ) {
                             // Play
+                            playerViewModel.playPodcast(
+                                (podcastSearchViewModel.podcastSearch as Resource.Success).data.results,
+                                podcast
+                            )
                         }
 
                         Spacer(modifier = Modifier.weight(1f))

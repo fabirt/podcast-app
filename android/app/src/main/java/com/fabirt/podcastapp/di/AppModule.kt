@@ -1,12 +1,15 @@
 package com.fabirt.podcastapp.di
 
 import android.content.Context
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import com.fabirt.podcastapp.data.datastore.PodcastDataStore
+import com.fabirt.podcastapp.data.exoplayer.PodcastMediaSource
 import com.fabirt.podcastapp.data.network.client.ListenNotesAPIClient
 import com.fabirt.podcastapp.data.network.service.PodcastService
+import com.fabirt.podcastapp.data.service.MediaPlayerServiceConnection
 import com.fabirt.podcastapp.domain.repository.PodcastRepository
 import com.fabirt.podcastapp.domain.repository.PodcastRepositoryImpl
-import com.fabirt.podcastapp.domain.repository.PodcastRepositoryMockImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,6 +18,8 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import javax.inject.Singleton
 
+@ExperimentalAnimationApi
+@ExperimentalFoundationApi
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
@@ -40,4 +45,11 @@ object AppModule {
         service: PodcastService,
         dataStore: PodcastDataStore
     ): PodcastRepository = PodcastRepositoryImpl(service, dataStore)
+
+    @Provides
+    @Singleton
+    fun provideMediaPlayerServiceConnection(
+        @ApplicationContext context: Context,
+        mediaSource: PodcastMediaSource
+    ): MediaPlayerServiceConnection = MediaPlayerServiceConnection(context, mediaSource)
 }

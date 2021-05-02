@@ -15,7 +15,7 @@ class PodcastRepositoryMockImpl : PodcastRepository {
         type: String
     ): Either<Failure, PodcastSearch> {
         delay(5000)
-        return left(Failure.UnexpectedFailure)
+        //return left(Failure.UnexpectedFailure)
         return right(demoData())
     }
 

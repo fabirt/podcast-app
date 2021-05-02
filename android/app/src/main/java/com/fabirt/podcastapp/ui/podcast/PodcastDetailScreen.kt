@@ -15,7 +15,7 @@ import com.fabirt.podcastapp.R
 import com.fabirt.podcastapp.ui.common.BackButton
 import com.fabirt.podcastapp.ui.common.EmphasisText
 import com.fabirt.podcastapp.ui.common.PrimaryButton
-import com.fabirt.podcastapp.ui.viewmodel.PodcastSearchViewModel
+import com.fabirt.podcastapp.ui.common.ViewModelProvider
 import com.fabirt.podcastapp.util.formatMillisecondsAsDate
 import com.fabirt.podcastapp.util.toDurationMinutes
 import com.google.accompanist.insets.navigationBarsPadding
@@ -24,10 +24,10 @@ import com.google.accompanist.insets.statusBarsPadding
 @Composable
 fun PodcastDetailScreen(
     podcastId: String,
-    podcastSearchViewModel: PodcastSearchViewModel? = null
 ) {
     val scrollState = rememberScrollState()
-    val podcast = podcastSearchViewModel?.getPodcastDetail(podcastId)
+    val podcastSearchViewModel = ViewModelProvider.podcastSearch
+    val podcast = podcastSearchViewModel.getPodcastDetail(podcastId)
 
     Surface {
         Column(
@@ -95,8 +95,6 @@ fun PodcastDetailScreen(
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))
-
-                    // Text("https://www.listennotes.com/e/ea09b575d07341599d8d5b71f205517b/")
 
                     EmphasisText(text = podcast.descriptionOriginal)
                 }

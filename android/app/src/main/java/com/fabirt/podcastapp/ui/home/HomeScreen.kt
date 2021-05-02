@@ -15,6 +15,7 @@ import androidx.navigation.compose.navigate
 import com.fabirt.podcastapp.domain.model.Episode
 import com.fabirt.podcastapp.ui.common.PreviewContent
 import com.fabirt.podcastapp.ui.common.StaggeredVerticalGrid
+import com.fabirt.podcastapp.ui.common.ViewModelProvider
 import com.fabirt.podcastapp.ui.navigation.Destination
 import com.fabirt.podcastapp.ui.navigation.Navigator
 import com.fabirt.podcastapp.ui.viewmodel.PodcastSearchViewModel
@@ -23,12 +24,11 @@ import com.google.accompanist.insets.navigationBarsPadding
 
 @ExperimentalFoundationApi
 @Composable
-fun HomeScreen(
-    podcastSearchViewModel: PodcastSearchViewModel? = null
-) {
+fun HomeScreen() {
     val scrollState = rememberLazyListState()
     val navController = Navigator.current
-    val podcastSearch = podcastSearchViewModel?.podcastSearch
+    val podcastSearchViewModel = ViewModelProvider.podcastSearch
+    val podcastSearch = podcastSearchViewModel.podcastSearch
 
     Surface {
         LazyColumn(state = scrollState) {

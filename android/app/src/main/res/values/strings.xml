@@ -7,6 +7,8 @@
     <string name="back">back</string>
     <string name="play">Play</string>
     <string name="share">Share</string>
+    <string name="source_web">Listen Notes URL</string>
     <string name="unexpected_error">An unexpected error occurred :(\nPlease try again</string>
     <string name="try_again">Try again</string>
+    <string name="share_podcast_content">Take a look at this podcast %1$s</string>
 </resources>

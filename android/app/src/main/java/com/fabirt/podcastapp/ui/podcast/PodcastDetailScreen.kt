@@ -9,6 +9,7 @@ import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.fabirt.podcastapp.R
@@ -27,7 +28,9 @@ fun PodcastDetailScreen(
 ) {
     val scrollState = rememberScrollState()
     val podcastSearchViewModel = ViewModelProvider.podcastSearch
+    val detailViewModel = ViewModelProvider.podcastDetail
     val podcast = podcastSearchViewModel.getPodcastDetail(podcastId)
+    val currentContext = LocalContext.current
 
     Surface {
         Column(
@@ -83,14 +86,14 @@ fun PodcastDetailScreen(
                             imageVector = Icons.Rounded.Share,
                             contentDescription = stringResource(R.string.share)
                         ) {
-
+                            detailViewModel.sharePodcastEpidose(currentContext, podcast)
                         }
 
                         com.fabirt.podcastapp.ui.common.IconButton(
                             imageVector = Icons.Rounded.Info,
-                            contentDescription = stringResource(R.string.share)
+                            contentDescription = stringResource(R.string.source_web)
                         ) {
-
+                            detailViewModel.openListenNotesURL(currentContext, podcast)
                         }
                     }
 

@@ -13,7 +13,11 @@ import javax.inject.Inject
 class PodcastDetailViewModel @Inject constructor() : ViewModel() {
 
     fun sharePodcastEpidose(context: Context, episode: Episode) {
-        val text = context.getString(R.string.share_podcast_content, episode.listennotesURL)
+        val text = context.getString(
+            R.string.share_podcast_content,
+            episode.titleOriginal,
+            episode.listennotesURL
+        )
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TITLE, episode.titleOriginal)

@@ -5,6 +5,7 @@ buildscript {
         accompanist_version = '0.8.1'
         room_version = "2.2.6"
         hilt_version = "2.35"
+        retrofit_version = "2.9.0"
     }
     repositories {
         google()

@@ -18,9 +18,11 @@ import com.fabirt.podcastapp.ui.podcast.PodcastDetailScreen
 import com.fabirt.podcastapp.ui.theme.PodcastAppTheme
 import com.fabirt.podcastapp.ui.welcome.WelcomeScreen
 import com.google.accompanist.insets.ProvideWindowInsets
+import dagger.hilt.android.AndroidEntryPoint
 
 @ExperimentalFoundationApi
 @ExperimentalAnimationApi
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

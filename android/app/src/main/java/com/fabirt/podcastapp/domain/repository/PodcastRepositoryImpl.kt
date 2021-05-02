@@ -1,6 +1,7 @@
 package com.fabirt.podcastapp.domain.repository
 
 import android.util.Log
+import com.fabirt.podcastapp.data.datastore.PodcastDataStore
 import com.fabirt.podcastapp.data.network.service.PodcastService
 import com.fabirt.podcastapp.domain.model.PodcastSearch
 import com.fabirt.podcastapp.error.Failure
@@ -9,18 +10,30 @@ import com.fabirt.podcastapp.util.left
 import com.fabirt.podcastapp.util.right
 
 class PodcastRepositoryImpl(
-    private val service: PodcastService
+    private val service: PodcastService,
+    private val dataStore: PodcastDataStore
 ) : PodcastRepository {
+
+    companion object {
+        private const val TAG = "PodcastRepository"
+    }
 
     override suspend fun searchPodcasts(
         query: String,
         type: String
     ): Either<Failure, PodcastSearch> {
         return try {
-            val result = service.searchPodcasts(query, type)
-            right(result.asDomainModel())
+            val canFetchAPI = dataStore.canFetchAPI()
+            Log.i(TAG, canFetchAPI.toString())
+            if (canFetchAPI) {
+                val result = service.searchPodcasts(query, type).asDomainModel()
+                dataStore.storePodcastSearchResult(result)
+                right(result)
+            } else {
+                right(dataStore.readLastPodcastSearchResult())
+            }
         } catch (e: Exception) {
-            Log.e("PodcastRepositoryImpl", e.toString()  + " "+ e.stackTraceToString())
+            Log.e("PodcastRepositoryImpl", e.toString() + " " + e.stackTraceToString())
             left(Failure.UnexpectedFailure)
         }
     }

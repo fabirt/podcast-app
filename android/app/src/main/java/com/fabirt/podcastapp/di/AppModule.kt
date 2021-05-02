@@ -1,5 +1,7 @@
 package com.fabirt.podcastapp.di
 
+import android.content.Context
+import com.fabirt.podcastapp.data.datastore.PodcastDataStore
 import com.fabirt.podcastapp.data.network.client.ListenNotesAPIClient
 import com.fabirt.podcastapp.data.network.service.PodcastService
 import com.fabirt.podcastapp.domain.repository.PodcastRepository
@@ -8,6 +10,7 @@ import com.fabirt.podcastapp.domain.repository.PodcastRepositoryMockImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import javax.inject.Singleton
@@ -27,7 +30,14 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun providePodcastDataStore(
+        @ApplicationContext context: Context
+    ): PodcastDataStore = PodcastDataStore(context)
+
+    @Provides
+    @Singleton
     fun providePodcastRepository(
-        service: PodcastService
-    ): PodcastRepository = PodcastRepositoryMockImpl()
+        service: PodcastService,
+        dataStore: PodcastDataStore
+    ): PodcastRepository = PodcastRepositoryImpl(service, dataStore)
 }

@@ -1,8 +1,6 @@
 package com.fabirt.podcastapp.di
 
 import android.content.Context
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.ExperimentalFoundationApi
 import com.fabirt.podcastapp.data.datastore.PodcastDataStore
 import com.fabirt.podcastapp.data.exoplayer.PodcastMediaSource
 import com.fabirt.podcastapp.data.network.client.ListenNotesAPIClient
@@ -18,8 +16,6 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import javax.inject.Singleton
 
-@ExperimentalAnimationApi
-@ExperimentalFoundationApi
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {

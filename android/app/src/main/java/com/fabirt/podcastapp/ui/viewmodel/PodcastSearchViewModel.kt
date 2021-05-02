@@ -1,6 +1,5 @@
 package com.fabirt.podcastapp.ui.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -23,7 +22,6 @@ class PodcastSearchViewModel @Inject constructor(
         private set
 
     init {
-        Log.i("PodcastSearchViewModel", "init")
         searchPodcasts()
     }
 
@@ -35,10 +33,10 @@ class PodcastSearchViewModel @Inject constructor(
         }
     }
 
-    private fun searchPodcasts() {
+    fun searchPodcasts() {
         viewModelScope.launch {
             podcastSearch = Resource.Loading
-            val result = repository.searchPodcasts("", "episode")
+            val result = repository.searchPodcasts("android", "episode")
             result.fold(
                 { failure ->
                     podcastSearch = Resource.Error(failure)

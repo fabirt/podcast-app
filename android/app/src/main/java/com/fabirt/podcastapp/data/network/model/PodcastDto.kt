@@ -7,8 +7,6 @@ data class PodcastDto(
     val id: String,
     val image: String,
     val thumbnail: String,
-    @SerializedName("listen_score")
-    val listenScore: Long,
     @SerializedName("title_original")
     val titleOriginal: String,
     @SerializedName("listennotes_url")
@@ -21,7 +19,6 @@ data class PodcastDto(
         id,
         image,
         thumbnail,
-        listenScore,
         titleOriginal,
         listennotesURL,
         publisherOriginal

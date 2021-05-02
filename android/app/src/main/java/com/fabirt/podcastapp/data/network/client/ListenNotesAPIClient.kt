@@ -11,15 +11,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ListenNotesAPIClient {
     fun createHttpClient(): OkHttpClient {
         val requestInterceptor = Interceptor { chain ->
-            val url = chain.request()
-                .url()
-                .newBuilder()
-                .addQueryParameter("apiKey", BuildConfig.API_KEY)
-                .build()
-
             val request = chain.request()
                 .newBuilder()
-                .url(url)
+                .addHeader("X-ListenAPI-Key", BuildConfig.API_KEY)
                 .build()
 
             return@Interceptor chain.proceed(request)

@@ -1,5 +1,6 @@
 package com.fabirt.podcastapp.domain.repository
 
+import android.util.Log
 import com.fabirt.podcastapp.data.network.service.PodcastService
 import com.fabirt.podcastapp.domain.model.PodcastSearch
 import com.fabirt.podcastapp.error.Failure
@@ -19,6 +20,7 @@ class PodcastRepositoryImpl(
             val result = service.searchPodcasts(query, type)
             right(result.asDomainModel())
         } catch (e: Exception) {
+            Log.e("PodcastRepositoryImpl", e.toString()  + " "+ e.stackTraceToString())
             left(Failure.UnexpectedFailure)
         }
     }

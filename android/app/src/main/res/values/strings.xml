@@ -7,5 +7,6 @@
     <string name="back">back</string>
     <string name="play">Play</string>
     <string name="share">Share</string>
-    <string name="unexpected_error">An error occurred :(</string>
+    <string name="unexpected_error">An unexpected error occurred :(\nPlease try again</string>
+    <string name="try_again">Try again</string>
 </resources>

@@ -16,7 +16,6 @@ import com.fabirt.podcastapp.ui.podcast.PodcastImage
 @Composable
 fun PodcastView(
     podcast: Episode,
-    position: Int,
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
@@ -28,7 +27,7 @@ fun PodcastView(
     ) {
         PodcastImage(
             url = podcast.thumbnail,
-            aspectRatio = if (position % 4 == 0) 2f / 3f else 1f
+            aspectRatio = 1f
         )
         Text(
             podcast.titleOriginal,

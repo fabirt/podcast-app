@@ -5,23 +5,21 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.navigate
+import com.fabirt.podcastapp.domain.model.Episode
 import com.fabirt.podcastapp.ui.common.PreviewContent
 import com.fabirt.podcastapp.ui.common.StaggeredVerticalGrid
 import com.fabirt.podcastapp.ui.navigation.Destination
 import com.fabirt.podcastapp.ui.navigation.Navigator
-import com.google.accompanist.insets.navigationBarsPadding
-import androidx.navigation.compose.navigate
-import com.fabirt.podcastapp.domain.model.Episode
 import com.fabirt.podcastapp.ui.viewmodel.PodcastSearchViewModel
 import com.fabirt.podcastapp.util.Resource
+import com.google.accompanist.insets.navigationBarsPadding
 
 @ExperimentalFoundationApi
 @Composable
@@ -41,12 +39,14 @@ fun HomeScreen(
             when (podcastSearch) {
                 is Resource.Error -> {
                     item {
-                        Text(podcastSearch.failure.translate())
+                        ErrorView(text = podcastSearch.failure.translate()) {
+                            podcastSearchViewModel.searchPodcasts()
+                        }
                     }
                 }
                 Resource.Loading -> {
                     item {
-                        CircularProgressIndicator()
+                        LoadingPlaceholder()
                     }
                 }
                 is Resource.Success -> {
@@ -56,10 +56,9 @@ fun HomeScreen(
                             spacing = 16.dp,
                             modifier = Modifier.padding(horizontal = 16.dp)
                         ) {
-                            podcastSearch.data.results.forEachIndexed { index, podcast ->
+                            podcastSearch.data.results.forEach { podcast ->
                                 PodcastView(
                                     podcast = podcast,
-                                    position = index,
                                     modifier = Modifier.padding(bottom = 16.dp)
                                 ) {
                                     openPodcastDetail(navController, podcast)

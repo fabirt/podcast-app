@@ -5,6 +5,7 @@ import com.fabirt.podcastapp.domain.model.Podcast
 import com.fabirt.podcastapp.domain.model.PodcastSearch
 import com.fabirt.podcastapp.error.Failure
 import com.fabirt.podcastapp.util.Either
+import com.fabirt.podcastapp.util.left
 import com.fabirt.podcastapp.util.right
 import kotlinx.coroutines.delay
 
@@ -13,7 +14,8 @@ class PodcastRepositoryMockImpl : PodcastRepository {
         query: String,
         type: String
     ): Either<Failure, PodcastSearch> {
-        delay(8000)
+        delay(5000)
+        return left(Failure.UnexpectedFailure)
         return right(demoData())
     }
 
@@ -22,7 +24,6 @@ class PodcastRepositoryMockImpl : PodcastRepository {
             id = "8758da9be6c8452884a8cab6373b007c",
             image = "https://cdn-images-1.listennotes.com/podcasts/the-rough-cut-PmR84dsqcbj-53MLh7NpAwm.1400x1400.jpg",
             thumbnail = "https://cdn-images-1.listennotes.com/podcasts/the-rough-cut-AzKVtPeMOL4-53MLh7NpAwm.300x300.jpg",
-            listenScore = 37,
             titleOriginal = "The Rough Cut",
             listennotesURL = "https://www.listennotes.com/c/8758da9be6c8452884a8cab6373b007c/",
             publisherOriginal = "Matt Feury"

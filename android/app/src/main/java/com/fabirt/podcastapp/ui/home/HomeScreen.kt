@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,13 +20,17 @@ import com.fabirt.podcastapp.ui.navigation.Navigator
 import com.google.accompanist.insets.navigationBarsPadding
 import androidx.navigation.compose.navigate
 import com.fabirt.podcastapp.domain.model.Episode
-import com.fabirt.podcastapp.domain.model.demoData
+import com.fabirt.podcastapp.ui.viewmodel.PodcastSearchViewModel
+import com.fabirt.podcastapp.util.Resource
 
 @ExperimentalFoundationApi
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    podcastSearchViewModel: PodcastSearchViewModel? = null
+) {
     val scrollState = rememberLazyListState()
     val navController = Navigator.current
+    val podcastSearch = podcastSearchViewModel?.podcastSearch
 
     Surface {
         LazyColumn(state = scrollState) {
@@ -32,19 +38,33 @@ fun HomeScreen() {
                 LargeTitle()
             }
 
-            item {
-                StaggeredVerticalGrid(
-                    crossAxisCount = 2,
-                    spacing = 16.dp,
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                ) {
-                    demoData().results.forEachIndexed { index, podcast ->
-                        PodcastView(
-                            podcast = podcast,
-                            position = index,
-                            modifier = Modifier.padding(bottom = 16.dp)
+            when (podcastSearch) {
+                is Resource.Error -> {
+                    item {
+                        Text(podcastSearch.failure.translate())
+                    }
+                }
+                Resource.Loading -> {
+                    item {
+                        CircularProgressIndicator()
+                    }
+                }
+                is Resource.Success -> {
+                    item {
+                        StaggeredVerticalGrid(
+                            crossAxisCount = 2,
+                            spacing = 16.dp,
+                            modifier = Modifier.padding(horizontal = 16.dp)
                         ) {
-                            openPodcastDetail(navController, podcast)
+                            podcastSearch.data.results.forEachIndexed { index, podcast ->
+                                PodcastView(
+                                    podcast = podcast,
+                                    position = index,
+                                    modifier = Modifier.padding(bottom = 16.dp)
+                                ) {
+                                    openPodcastDetail(navController, podcast)
+                                }
+                            }
                         }
                     }
                 }

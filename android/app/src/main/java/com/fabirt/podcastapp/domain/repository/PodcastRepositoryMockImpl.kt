@@ -13,7 +13,7 @@ class PodcastRepositoryMockImpl : PodcastRepository {
         query: String,
         type: String
     ): Either<Failure, PodcastSearch> {
-        delay(2000)
+        delay(8000)
         return right(demoData())
     }
 

@@ -53,6 +53,8 @@ fun PodcastDetailScreen(
                         .verticalScroll(scrollState)
                         .navigationBarsPadding()
                         .padding(vertical = 24.dp, horizontal = 16.dp)
+                        .padding(bottom = if (playerViewModel.currentPlayingEpisode.value != null) 64.dp else 0.dp)
+
                 ) {
                     PodcastImage(
                         url = podcast.image,

@@ -1,5 +1,6 @@
 package com.fabirt.podcastapp.ui.home
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -22,6 +23,7 @@ import com.fabirt.podcastapp.ui.viewmodel.PodcastSearchViewModel
 import com.fabirt.podcastapp.util.Resource
 import com.google.accompanist.insets.navigationBarsPadding
 
+@ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @Composable
 fun HomeScreen() {
@@ -74,6 +76,7 @@ fun HomeScreen() {
                     modifier = Modifier
                         .navigationBarsPadding()
                         .padding(bottom = 32.dp)
+                        .padding(bottom = if (ViewModelProvider.podcastPlayer.currentPlayingEpisode.value != null) 64.dp else 0.dp)
                 )
             }
         }
@@ -87,6 +90,7 @@ private fun openPodcastDetail(
     navController.navigate(Destination.podcast(podcast.id)) { }
 }
 
+@ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @Composable
 @Preview(name = "Home")
@@ -96,6 +100,7 @@ fun HomeScreenPreview() {
     }
 }
 
+@ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @Composable
 @Preview(name = "Home (Dark)")

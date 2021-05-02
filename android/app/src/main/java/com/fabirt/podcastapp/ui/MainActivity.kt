@@ -5,7 +5,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -16,6 +20,7 @@ import com.fabirt.podcastapp.ui.home.HomeScreen
 import com.fabirt.podcastapp.ui.navigation.Destination
 import com.fabirt.podcastapp.ui.navigation.Navigator
 import com.fabirt.podcastapp.ui.navigation.ProvideNavHostController
+import com.fabirt.podcastapp.ui.podcast.PodcastBottomView
 import com.fabirt.podcastapp.ui.podcast.PodcastDetailScreen
 import com.fabirt.podcastapp.ui.theme.PodcastAppTheme
 import com.fabirt.podcastapp.ui.welcome.WelcomeScreen
@@ -51,18 +56,25 @@ fun PodcastApp(
         ProvideWindowInsets {
             ProvideMultiViewModel {
                 ProvideNavHostController {
-                    NavHost(Navigator.current, startDestination) {
-                        composable(Destination.welcome) { WelcomeScreen() }
+                    Box(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        NavHost(Navigator.current, startDestination) {
+                            composable(Destination.welcome) { WelcomeScreen() }
 
-                        composable(Destination.home) {
-                            HomeScreen()
-                        }
+                            composable(Destination.home) {
+                                HomeScreen()
+                            }
 
-                        composable(Destination.podcast) { backStackEntry ->
-                            PodcastDetailScreen(
-                                podcastId = backStackEntry.arguments?.getString("id")!!,
-                            )
+                            composable(Destination.podcast) { backStackEntry ->
+                                PodcastDetailScreen(
+                                    podcastId = backStackEntry.arguments?.getString("id")!!,
+                                )
+                            }
                         }
+                        PodcastBottomView(
+                            modifier = Modifier.align(Alignment.BottomCenter)
+                        )
                     }
                 }
             }

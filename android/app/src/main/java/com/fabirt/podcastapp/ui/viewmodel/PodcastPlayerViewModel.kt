@@ -17,7 +17,7 @@ class PodcastPlayerViewModel @Inject constructor(
     private val serviceConnection: MediaPlayerServiceConnection
 ) : ViewModel() {
 
-    val currentPlayingSong = serviceConnection.currentPlayingMedia
+    val currentPlayingEpisode = serviceConnection.currentPlayingEpisode
     val playbackState = serviceConnection.playbackState
 
     fun playPodcast(episodes: List<Episode>, currentEpisode: Episode) {

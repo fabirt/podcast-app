@@ -14,6 +14,8 @@ import javax.inject.Singleton
 @Singleton
 class PodcastMediaSource @Inject constructor() {
     var mediaMetadataEpisodes: List<MediaMetadataCompat> = emptyList()
+    var podcastEpisodes: List<Episode> = emptyList()
+        private set
     private val onReadyListeners = mutableListOf<OnReadyListener>()
 
     private var state: MusicSourceState =
@@ -36,11 +38,19 @@ class PodcastMediaSource @Inject constructor() {
 
     fun setEpisodes(data: List<Episode>) {
         state = MusicSourceState.INITIALIZING
+        podcastEpisodes = data
         mediaMetadataEpisodes = data.map { episode ->
             MediaMetadataCompat.Builder()
                 .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, episode.id)
-                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, episode.podcast.publisherOriginal)
+                .putString(
+                    MediaMetadataCompat.METADATA_KEY_ARTIST,
+                    episode.podcast.publisherOriginal
+                )
                 .putString(MediaMetadataCompat.METADATA_KEY_TITLE, episode.titleOriginal)
+                .putString(
+                    MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE,
+                    episode.podcast.titleOriginal
+                )
                 .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, episode.audio)
                 .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, episode.image)
                 .build()

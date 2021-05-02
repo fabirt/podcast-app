@@ -8,8 +8,6 @@ import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.util.Log
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.media.MediaBrowserServiceCompat
 import com.fabirt.podcastapp.constant.K
 import com.fabirt.podcastapp.data.exoplayer.*
@@ -24,8 +22,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import javax.inject.Inject
 
-@ExperimentalAnimationApi
-@ExperimentalFoundationApi
 @AndroidEntryPoint
 class MediaPlayerService : MediaBrowserServiceCompat() {
     @Inject

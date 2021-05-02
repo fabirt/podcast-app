@@ -7,6 +7,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,8 +28,6 @@ import com.fabirt.podcastapp.ui.welcome.WelcomeScreen
 import com.google.accompanist.insets.ProvideWindowInsets
 import dagger.hilt.android.AndroidEntryPoint
 
-@ExperimentalFoundationApi
-@ExperimentalAnimationApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
@@ -46,8 +45,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@ExperimentalFoundationApi
-@ExperimentalAnimationApi
 @Composable
 fun PodcastApp(
     startDestination: String = Destination.welcome

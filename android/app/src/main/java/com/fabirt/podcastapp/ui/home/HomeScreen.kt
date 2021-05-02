@@ -1,7 +1,5 @@
 package com.fabirt.podcastapp.ui.home
 
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,12 +17,9 @@ import com.fabirt.podcastapp.ui.common.StaggeredVerticalGrid
 import com.fabirt.podcastapp.ui.common.ViewModelProvider
 import com.fabirt.podcastapp.ui.navigation.Destination
 import com.fabirt.podcastapp.ui.navigation.Navigator
-import com.fabirt.podcastapp.ui.viewmodel.PodcastSearchViewModel
 import com.fabirt.podcastapp.util.Resource
 import com.google.accompanist.insets.navigationBarsPadding
 
-@ExperimentalAnimationApi
-@ExperimentalFoundationApi
 @Composable
 fun HomeScreen() {
     val scrollState = rememberLazyListState()
@@ -90,8 +85,6 @@ private fun openPodcastDetail(
     navController.navigate(Destination.podcast(podcast.id)) { }
 }
 
-@ExperimentalAnimationApi
-@ExperimentalFoundationApi
 @Composable
 @Preview(name = "Home")
 fun HomeScreenPreview() {
@@ -100,8 +93,6 @@ fun HomeScreenPreview() {
     }
 }
 
-@ExperimentalAnimationApi
-@ExperimentalFoundationApi
 @Composable
 @Preview(name = "Home (Dark)")
 fun HomeScreenDarkPreview() {

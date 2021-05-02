@@ -10,7 +10,7 @@ import androidx.compose.ui.res.stringResource
 import com.fabirt.podcastapp.R
 import com.fabirt.podcastapp.ui.common.PrimaryButton
 
-@ExperimentalAnimationApi
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AnimatedButton(visible: Boolean, onClick: () -> Unit) {
     val buttonEnterTransition = fadeIn(

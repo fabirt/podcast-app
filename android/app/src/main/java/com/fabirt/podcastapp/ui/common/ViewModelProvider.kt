@@ -2,6 +2,7 @@ package com.fabirt.podcastapp.ui.common
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -19,16 +20,11 @@ object ViewModelProvider {
         @Composable
         get() = LocalPodcastDetailViewModel.current
 
-    @ExperimentalAnimationApi
-    @ExperimentalFoundationApi
     val podcastPlayer: PodcastPlayerViewModel
         @Composable
         get() = LocalPodcastPlayerViewModel.current
 }
 
-
-@ExperimentalAnimationApi
-@ExperimentalFoundationApi
 @Composable
 fun ProvideMultiViewModel(content: @Composable () -> Unit) {
     val viewModel1: PodcastSearchViewModel = viewModel()
@@ -58,8 +54,6 @@ private val LocalPodcastDetailViewModel = staticCompositionLocalOf<PodcastDetail
     error("No PodcastDetailViewModel provided")
 }
 
-@ExperimentalAnimationApi
-@ExperimentalFoundationApi
 private val LocalPodcastPlayerViewModel = staticCompositionLocalOf<PodcastPlayerViewModel> {
     error("No PodcastDetailViewModel provided")
 }

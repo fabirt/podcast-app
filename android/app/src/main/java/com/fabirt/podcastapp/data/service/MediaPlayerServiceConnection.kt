@@ -6,8 +6,6 @@ import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,8 +13,6 @@ import com.fabirt.podcastapp.constant.K
 import com.fabirt.podcastapp.data.exoplayer.PodcastMediaSource
 import com.fabirt.podcastapp.domain.model.Episode
 
-@ExperimentalFoundationApi
-@ExperimentalAnimationApi
 class MediaPlayerServiceConnection(
     context: Context,
     private val mediaSource: PodcastMediaSource,

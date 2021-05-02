@@ -1,6 +1,5 @@
 package com.fabirt.podcastapp.ui.welcome
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Surface
 import androidx.compose.runtime.*
@@ -14,7 +13,6 @@ import com.fabirt.podcastapp.ui.common.PreviewContent
 import com.fabirt.podcastapp.ui.navigation.Destination
 import com.fabirt.podcastapp.ui.navigation.Navigator
 
-@ExperimentalAnimationApi
 @Composable
 fun WelcomeScreen() {
     var visible by remember { mutableStateOf(false) }
@@ -31,7 +29,6 @@ fun WelcomeScreen() {
     }
 }
 
-@ExperimentalAnimationApi
 @Composable
 fun WelcomeScreenContent(
     visible: Boolean,
@@ -54,7 +51,6 @@ fun WelcomeScreenContent(
     }
 }
 
-@ExperimentalAnimationApi
 @Preview(name = "Welcome")
 @Composable
 fun WelcomeScreenPreview() {
@@ -63,7 +59,6 @@ fun WelcomeScreenPreview() {
     }
 }
 
-@ExperimentalAnimationApi
 @Preview(name = "Welcome (Dark)")
 @Composable
 fun WelcomeScreenDarkPreview() {

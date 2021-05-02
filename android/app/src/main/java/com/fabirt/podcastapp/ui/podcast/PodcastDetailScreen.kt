@@ -1,7 +1,5 @@
 package com.fabirt.podcastapp.ui.podcast
 
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -25,8 +23,6 @@ import com.fabirt.podcastapp.util.toDurationMinutes
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
 
-@ExperimentalAnimationApi
-@ExperimentalFoundationApi
 @Composable
 fun PodcastDetailScreen(
     podcastId: String,

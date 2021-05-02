@@ -2,15 +2,11 @@ package com.fabirt.podcastapp.data.exoplayer
 
 import android.app.Notification
 import android.content.Intent
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.core.content.ContextCompat
 import com.fabirt.podcastapp.constant.K
 import com.fabirt.podcastapp.data.service.MediaPlayerService
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 
-@ExperimentalFoundationApi
-@ExperimentalAnimationApi
 class MediaPlayerNotificationListener(
     private val mediaService: MediaPlayerService
 ) : PlayerNotificationManager.NotificationListener {

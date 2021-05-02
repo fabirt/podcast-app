@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import com.fabirt.podcastapp.constant.K
 import com.fabirt.podcastapp.data.service.MediaPlayerServiceConnection
 import com.fabirt.podcastapp.domain.model.Episode
+import com.fabirt.podcastapp.util.isPlayEnabled
+import com.fabirt.podcastapp.util.isPlaying
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -16,9 +18,24 @@ class PodcastPlayerViewModel @Inject constructor(
     val currentPlayingEpisode = serviceConnection.currentPlayingEpisode
     val playbackState = serviceConnection.playbackState
 
+    val podcastisPlaying: Boolean
+        get() = playbackState.value?.isPlaying == true
+
     fun playPodcast(episodes: List<Episode>, currentEpisode: Episode) {
         serviceConnection.playPodcast(episodes)
         serviceConnection.transportControls.playFromMediaId(currentEpisode.id, null)
+    }
+
+    fun tooglePlaybackState() {
+        when {
+            playbackState.value?.isPlaying == true -> {
+                serviceConnection.transportControls.pause()
+            }
+
+            playbackState.value?.isPlayEnabled == true -> {
+                serviceConnection.transportControls.play()
+            }
+        }
     }
 
     fun stopPlayback() {

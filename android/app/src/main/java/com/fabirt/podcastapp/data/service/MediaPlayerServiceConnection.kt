@@ -7,8 +7,6 @@ import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.fabirt.podcastapp.constant.K
 import com.fabirt.podcastapp.data.exoplayer.PodcastMediaSource
 import com.fabirt.podcastapp.domain.model.Episode
@@ -18,9 +16,7 @@ class MediaPlayerServiceConnection(
     private val mediaSource: PodcastMediaSource,
 ) {
 
-    private val _playbackState = MutableLiveData<PlaybackStateCompat?>()
-    val playbackState: LiveData<PlaybackStateCompat?> get() = _playbackState
-
+    var playbackState = mutableStateOf<PlaybackStateCompat?>(null)
     var currentPlayingEpisode = mutableStateOf<Episode?>(null)
 
     lateinit var mediaController: MediaControllerCompat
@@ -83,7 +79,7 @@ class MediaPlayerServiceConnection(
     private inner class MediaControllerCallback : MediaControllerCompat.Callback() {
         override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
             super.onPlaybackStateChanged(state)
-            _playbackState.postValue(state)
+            playbackState.value = state
         }
 
         override fun onMetadataChanged(metadata: MediaMetadataCompat?) {

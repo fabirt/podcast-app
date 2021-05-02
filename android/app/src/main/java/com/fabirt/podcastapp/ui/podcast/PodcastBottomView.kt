@@ -136,7 +136,7 @@ fun PodcastBottomViewContent(episode: Episode) {
                         tint = MaterialTheme.colors.onBackground,
                         modifier = Modifier.size(40.dp)
                     ) {
-
+                        podcastPlayer.tooglePlaybackState()
                     }
                 }
             }

@@ -4,11 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.compose.setContent
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,7 +19,7 @@ import com.fabirt.podcastapp.ui.home.HomeScreen
 import com.fabirt.podcastapp.ui.navigation.Destination
 import com.fabirt.podcastapp.ui.navigation.Navigator
 import com.fabirt.podcastapp.ui.navigation.ProvideNavHostController
-import com.fabirt.podcastapp.ui.podcast.PodcastBottomView
+import com.fabirt.podcastapp.ui.podcast.PodcastBottomBar
 import com.fabirt.podcastapp.ui.podcast.PodcastDetailScreen
 import com.fabirt.podcastapp.ui.podcast.PodcastPlayerScreen
 import com.fabirt.podcastapp.ui.theme.PodcastAppTheme
@@ -76,7 +73,7 @@ fun PodcastApp(
                                 )
                             }
                         }
-                        PodcastBottomView(
+                        PodcastBottomBar(
                             modifier = Modifier.align(Alignment.BottomCenter)
                         )
                         PodcastPlayerScreen(backDispatcher)

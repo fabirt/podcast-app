@@ -19,6 +19,8 @@ import com.fabirt.podcastapp.util.isPlayEnabled
 import com.fabirt.podcastapp.util.isPlaying
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,9 +37,6 @@ class PodcastPlayerViewModel @Inject constructor(
     val podcastIsPlaying: Boolean
         get() = playbackState.value?.isPlaying == true
 
-    val currentEpisodeDuration: Long
-        get() = MediaPlayerService.currentDuration
-
     val currentEpisodeProgress: Float
         get() {
             if (currentEpisodeDuration > 0) {
@@ -46,7 +45,16 @@ class PodcastPlayerViewModel @Inject constructor(
             return 0f
         }
 
+    val currentPlaybackFormattedPosition: String
+        get() = formatLong(currentPlaybackPosition)
+
+    val currentEpisodeFormattedDuration: String
+        get() = formatLong(currentEpisodeDuration)
+
     private val playbackState = serviceConnection.playbackState
+
+    private val currentEpisodeDuration: Long
+        get() = MediaPlayerService.currentDuration
 
     fun playPodcast(episodes: List<Episode>, currentEpisode: Episode) {
         serviceConnection.playPodcast(episodes)
@@ -101,6 +109,11 @@ class PodcastPlayerViewModel @Inject constructor(
         }
         delay(K.PLAYBACK_POSITION_UPDATE_INTERVAL)
         updateCurrentPlaybackPosition()
+    }
+
+    private fun formatLong(value: Long): String {
+        val dateFormat = SimpleDateFormat("mm:ss", Locale.getDefault())
+        return dateFormat.format(value)
     }
 
     override fun onCleared() {

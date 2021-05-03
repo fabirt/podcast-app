@@ -126,6 +126,8 @@ fun PodcastPlayerBody(episode: Episode, backDispatcher: OnBackPressedDispatcher)
             yOffset = swipeableState.offset.value.roundToInt(),
             playPauseIcon = iconResId,
             playbackProgress = podcastPlayer.currentEpisodeProgress,
+            currentTime = podcastPlayer.currentPlaybackFormattedPosition,
+            totalTime = podcastPlayer.currentEpisodeFormattedDuration,
             onRewind = {
                 podcastPlayer.rewind()
             },
@@ -162,6 +164,8 @@ fun PodcastPlayerSatelessContent(
     yOffset: Int,
     @DrawableRes playPauseIcon: Int,
     playbackProgress: Float,
+    currentTime: String,
+    totalTime: String,
     onRewind: () -> Unit,
     onForward: () -> Unit,
     onTooglePlayback: () -> Unit,
@@ -199,6 +203,7 @@ fun PodcastPlayerSatelessContent(
                             modifier = Modifier
                                 .padding(vertical = 32.dp)
                                 .clip(MaterialTheme.shapes.medium)
+                                .weight(1f, fill = false)
                                 .aspectRatio(1f)
                                 .background(MaterialTheme.colors.onBackground.copy(alpha = 0.08f))
                         ) {
@@ -251,8 +256,8 @@ fun PodcastPlayerSatelessContent(
                                 horizontalArrangement = Arrangement.SpaceBetween,
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                EmphasisText(text = "0:00")
-                                EmphasisText(text = "10:00")
+                                EmphasisText(text = currentTime)
+                                EmphasisText(text = totalTime)
                             }
                         }
 
@@ -324,6 +329,8 @@ fun PodcastPlayerPreview() {
             yOffset = 0,
             playPauseIcon = R.drawable.ic_round_play_arrow,
             playbackProgress = 0f,
+            currentTime = "0:00",
+            totalTime=  "10:00",
             onClose = { },
             onForward = { },
             onRewind = { },

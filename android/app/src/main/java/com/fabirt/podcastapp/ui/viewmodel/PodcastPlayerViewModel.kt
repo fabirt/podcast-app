@@ -102,6 +102,15 @@ class PodcastPlayerViewModel @Inject constructor(
         serviceConnection.rewind()
     }
 
+    /**
+     * @param value 0.0 to 1.0
+     */
+    fun seekToFraction(value: Float) {
+        serviceConnection.transportControls.seekTo(
+            (currentEpisodeDuration * value).toLong()
+        )
+    }
+
     suspend fun updateCurrentPlaybackPosition() {
         val currentPosition = playbackState.value?.currentPosition
         if (currentPosition != null && currentPosition != currentPlaybackPosition) {

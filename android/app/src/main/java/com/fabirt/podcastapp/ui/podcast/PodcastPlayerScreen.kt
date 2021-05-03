@@ -146,10 +146,11 @@ fun PodcastPlayerBody(episode: Episode, backDispatcher: OnBackPressedDispatcher)
                 podcastPlayer.tooglePlaybackState()
             },
             onSliderChange = { newPosition ->
-                sliderIsChanging = true
                 localSliderValue = newPosition
+                sliderIsChanging = true
             },
             onSliderChangeFinished = {
+                podcastPlayer.seekToFraction(localSliderValue)
                 sliderIsChanging = false
             }
         ) {
@@ -203,7 +204,13 @@ fun PodcastPlayerSatelessContent(
                 alpha = IndicatorBackgroundOpacity
             ),
         )
-    } else SliderDefaults.colors()
+    } else SliderDefaults.colors(
+        thumbColor = gradientColor,
+        activeTrackColor = gradientColor,
+        inactiveTrackColor = gradientColor.copy(
+            alpha = IndicatorBackgroundOpacity
+        ),
+    )
 
 
     Box(

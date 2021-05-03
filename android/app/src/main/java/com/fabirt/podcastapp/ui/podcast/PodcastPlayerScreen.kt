@@ -116,7 +116,7 @@ fun PodcastPlayerBody(episode: Episode, backDispatcher: OnBackPressedDispatcher)
             .swipeable(
                 state = swipeableState,
                 anchors = anchors,
-                thresholds = { _, _ -> FractionalThreshold(0.54f) },
+                thresholds = { _, _ -> FractionalThreshold(0.34f) },
                 orientation = Orientation.Vertical
             )
     ) {

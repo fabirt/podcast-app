@@ -6,7 +6,7 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.database.ExoDatabaseProvider
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
-import com.google.android.exoplayer2.upstream.cache.CacheDataSourceFactory
+import com.google.android.exoplayer2.upstream.cache.CacheDataSource
 import com.google.android.exoplayer2.upstream.cache.NoOpCacheEvictor
 import com.google.android.exoplayer2.upstream.cache.SimpleCache
 import com.google.android.exoplayer2.util.Util
@@ -40,6 +40,7 @@ object ServiceModule {
         .apply {
             setAudioAttributes(audioAttributes, true)
             setHandleAudioBecomingNoisy(true)
+
         }
 
     @Provides
@@ -53,10 +54,13 @@ object ServiceModule {
     fun provideCacheDataSourceFactory(
         @ApplicationContext context: Context,
         datasourceFactory: DefaultDataSourceFactory
-    ): CacheDataSourceFactory {
+    ): CacheDataSource.Factory {
         val cacheDir = File(context.cacheDir, "media")
         val databaseProvider = ExoDatabaseProvider(context)
         val cache = SimpleCache(cacheDir, NoOpCacheEvictor(), databaseProvider)
-        return CacheDataSourceFactory(cache, datasourceFactory)
+        return CacheDataSource.Factory().apply {
+            setCache(cache)
+            setUpstreamDataSourceFactory(datasourceFactory)
+        }
     }
 }

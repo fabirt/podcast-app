@@ -5,6 +5,7 @@ import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.MediaMetadataCompat
 import androidx.core.net.toUri
 import com.fabirt.podcastapp.domain.model.Episode
+import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
@@ -61,10 +62,10 @@ class PodcastMediaSource @Inject constructor() {
     fun asMediaSource(dataSourceFactory: DataSource.Factory): ConcatenatingMediaSource {
         val concatenatingMediaSource = ConcatenatingMediaSource()
         mediaMetadataEpisodes.forEach { metadata ->
-            val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
-                .createMediaSource(
-                    metadata.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI).toUri()
-                )
+            val mediaItem = MediaItem.fromUri(
+                metadata.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI).toUri()
+            )
+            val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(mediaItem)
             concatenatingMediaSource.addMediaSource(mediaSource)
         }
         return concatenatingMediaSource

@@ -14,7 +14,7 @@ import com.fabirt.podcastapp.data.exoplayer.*
 import com.fabirt.podcastapp.ui.MainActivity
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
-import com.google.android.exoplayer2.upstream.cache.CacheDataSourceFactory
+import com.google.android.exoplayer2.upstream.cache.CacheDataSource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +25,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MediaPlayerService : MediaBrowserServiceCompat() {
     @Inject
-    lateinit var dataSourceFactory: CacheDataSourceFactory
+    lateinit var dataSourceFactory: CacheDataSource.Factory
 
     @Inject
     lateinit var exoPlayer: SimpleExoPlayer
@@ -62,7 +62,12 @@ class MediaPlayerService : MediaBrowserServiceCompat() {
                 action = K.ACTION_PODCAST_NOTIFICATION_CLICK
             }
             .let {
-                PendingIntent.getActivity(this, 0, it, PendingIntent.FLAG_UPDATE_CURRENT)
+                PendingIntent.getActivity(
+                    this,
+                    0,
+                    it,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
             }
 
         mediaSession = MediaSessionCompat(this, TAG).apply {
@@ -155,7 +160,8 @@ class MediaPlayerService : MediaBrowserServiceCompat() {
         playWhenReady: Boolean
     ) {
         val indexToPlay = if (currentPlayingMedia == null) 0 else mediaMetaData.indexOf(itemToPlay)
-        exoPlayer.prepare(mediaSource.asMediaSource(dataSourceFactory))
+        exoPlayer.setMediaSource(mediaSource.asMediaSource(dataSourceFactory))
+        exoPlayer.prepare()
         exoPlayer.seekTo(indexToPlay, 0L)
         exoPlayer.playWhenReady = playWhenReady
     }

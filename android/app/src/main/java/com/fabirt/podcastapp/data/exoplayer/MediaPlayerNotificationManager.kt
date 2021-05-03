@@ -12,6 +12,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.fabirt.podcastapp.R
 import com.fabirt.podcastapp.constant.K
+import com.google.android.exoplayer2.DefaultControlDispatcher
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 
@@ -50,10 +51,10 @@ class MediaPlayerNotificationManager(
         ).apply {
             setSmallIcon(R.drawable.ic_microphone)
             setMediaSessionToken(sessionToken)
-            setRewindIncrementMs(0L)
-            setFastForwardIncrementMs(0L)
             setUseStopAction(true)
-            setUseNavigationActionsInCompactView(true)
+            setUseNextActionInCompactView(true)
+            setUsePreviousActionInCompactView(true)
+            setControlDispatcher(DefaultControlDispatcher())
         }
     }
 
@@ -64,7 +65,7 @@ class MediaPlayerNotificationManager(
             return mediaController.sessionActivity
         }
 
-        override fun getCurrentContentText(player: Player): CharSequence? {
+        override fun getCurrentContentText(player: Player): CharSequence {
             return mediaController.metadata.description.subtitle.toString()
         }
 

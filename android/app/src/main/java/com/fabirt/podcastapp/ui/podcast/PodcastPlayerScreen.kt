@@ -11,6 +11,7 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
+import androidx.compose.material.ProgressIndicatorDefaults.IndicatorBackgroundOpacity
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.runtime.*
@@ -35,6 +36,7 @@ import coil.request.ImageRequest
 import com.fabirt.podcastapp.R
 import com.fabirt.podcastapp.domain.model.Episode
 import com.fabirt.podcastapp.domain.model.Podcast
+import com.fabirt.podcastapp.ui.common.EmphasisText
 import com.fabirt.podcastapp.ui.common.IconButton
 import com.fabirt.podcastapp.ui.common.PreviewContent
 import com.fabirt.podcastapp.ui.common.ViewModelProvider
@@ -123,6 +125,7 @@ fun PodcastPlayerBody(episode: Episode, backDispatcher: OnBackPressedDispatcher)
             gradientColor = gradientColor,
             yOffset = swipeableState.offset.value.roundToInt(),
             playPauseIcon = iconResId,
+            playbackProgress = podcastPlayer.currentEpisodeProgress,
             onRewind = {
                 podcastPlayer.rewind()
             },
@@ -135,6 +138,10 @@ fun PodcastPlayerBody(episode: Episode, backDispatcher: OnBackPressedDispatcher)
         ) {
             podcastPlayer.showPlayerFullScreen = false
         }
+    }
+
+    LaunchedEffect("playbackPosition") {
+        podcastPlayer.updateCurrentPlaybackPosition()
     }
 
     DisposableEffect(backDispatcher) {
@@ -154,6 +161,7 @@ fun PodcastPlayerSatelessContent(
     gradientColor: Color,
     yOffset: Int,
     @DrawableRes playPauseIcon: Int,
+    playbackProgress: Float,
     onRewind: () -> Unit,
     onForward: () -> Unit,
     onTooglePlayback: () -> Unit,
@@ -221,12 +229,39 @@ fun PodcastPlayerSatelessContent(
                             }
                         )
 
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 24.dp)
+                        ) {
+                            Slider(
+                                value = playbackProgress,
+                                onValueChange = {},
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                colors = SliderDefaults.colors(
+                                    thumbColor = MaterialTheme.colors.onBackground,
+                                    activeTrackColor = MaterialTheme.colors.onBackground,
+                                    inactiveTrackColor = MaterialTheme.colors.onBackground.copy(alpha = IndicatorBackgroundOpacity),
+                                )
+                            )
+
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                EmphasisText(text = "0:00")
+                                EmphasisText(text = "10:00")
+                            }
+                        }
+
                         Row(
                             horizontalArrangement = Arrangement.SpaceAround,
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 16.dp),
+                                .padding(vertical = 8.dp),
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.ic_round_replay_10),
@@ -288,6 +323,7 @@ fun PodcastPlayerPreview() {
             gradientColor = Color.DarkGray,
             yOffset = 0,
             playPauseIcon = R.drawable.ic_round_play_arrow,
+            playbackProgress = 0f,
             onClose = { },
             onForward = { },
             onRewind = { },

@@ -11,11 +11,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.palette.graphics.Palette
 import com.fabirt.podcastapp.constant.K
+import com.fabirt.podcastapp.data.service.MediaPlayerService
 import com.fabirt.podcastapp.data.service.MediaPlayerServiceConnection
 import com.fabirt.podcastapp.domain.model.Episode
+import com.fabirt.podcastapp.util.currentPosition
 import com.fabirt.podcastapp.util.isPlayEnabled
 import com.fabirt.podcastapp.util.isPlaying
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,12 +27,26 @@ class PodcastPlayerViewModel @Inject constructor(
 ) : ViewModel() {
 
     val currentPlayingEpisode = serviceConnection.currentPlayingEpisode
-    val playbackState = serviceConnection.playbackState
 
     var showPlayerFullScreen by mutableStateOf(false)
 
+    var currentPlaybackPosition by mutableStateOf(0L)
+
     val podcastIsPlaying: Boolean
         get() = playbackState.value?.isPlaying == true
+
+    val currentEpisodeDuration: Long
+        get() = MediaPlayerService.currentDuration
+
+    val currentEpisodeProgress: Float
+        get() {
+            if (currentEpisodeDuration > 0) {
+                return currentPlaybackPosition.toFloat() / currentEpisodeDuration
+            }
+            return 0f
+        }
+
+    private val playbackState = serviceConnection.playbackState
 
     fun playPodcast(episodes: List<Episode>, currentEpisode: Episode) {
         serviceConnection.playPodcast(episodes)
@@ -75,6 +92,15 @@ class PodcastPlayerViewModel @Inject constructor(
 
     fun rewind() {
         serviceConnection.rewind()
+    }
+
+    suspend fun updateCurrentPlaybackPosition() {
+        val currentPosition = playbackState.value?.currentPosition
+        if (currentPosition != null && currentPosition != currentPlaybackPosition) {
+            currentPlaybackPosition = currentPosition
+        }
+        delay(K.PLAYBACK_POSITION_UPDATE_INTERVAL)
+        updateCurrentPlaybackPosition()
     }
 
     override fun onCleared() {

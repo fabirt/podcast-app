@@ -28,13 +28,13 @@ class PodcastPlayerViewModel @Inject constructor(
 
     var showPlayerFullScreen by mutableStateOf(false)
 
-    val podcastisPlaying: Boolean
+    val podcastIsPlaying: Boolean
         get() = playbackState.value?.isPlaying == true
 
     fun playPodcast(episodes: List<Episode>, currentEpisode: Episode) {
         serviceConnection.playPodcast(episodes)
         if (currentEpisode.id == currentPlayingEpisode.value?.id) {
-            if (podcastisPlaying) {
+            if (podcastIsPlaying) {
                 serviceConnection.transportControls.pause()
             } else {
                 serviceConnection.transportControls.play()

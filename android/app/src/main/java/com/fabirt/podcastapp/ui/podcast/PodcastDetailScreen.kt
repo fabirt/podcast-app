@@ -45,7 +45,7 @@ fun PodcastDetailScreen(
 
             if (podcast != null) {
                 val playButtonText =
-                    if (playerViewModel.podcastisPlaying &&
+                    if (playerViewModel.podcastIsPlaying &&
                         playerViewModel.currentPlayingEpisode.value?.id == podcast.id
                     ) stringResource(R.string.pause) else stringResource(R.string.play)
 

@@ -4,30 +4,31 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.fabirt.podcastapp.R
 import com.fabirt.podcastapp.domain.model.Episode
-import com.fabirt.podcastapp.ui.common.IconButton
 import com.fabirt.podcastapp.ui.common.ViewModelProvider
 import com.google.accompanist.coil.rememberCoilPainter
 import com.google.accompanist.insets.navigationBarsPadding
@@ -62,6 +63,9 @@ fun PodcastBottomViewContent(episode: Episode) {
         endAnchor to 1
     )
 
+    val iconResId =
+        if (podcastPlayer.podcastIsPlaying) R.drawable.ic_round_pause else R.drawable.ic_round_play_arrow
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -94,17 +98,12 @@ fun PodcastBottomViewContent(episode: Episode) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Box(
-                    modifier = Modifier
-                        .size(64.dp)
-                ) {
-                    Image(
-                        painter = rememberCoilPainter(episode.thumbnail),
-                        contentDescription = stringResource(R.string.podcast_thumbnail),
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize(),
-                    )
-                }
+                Image(
+                    painter = rememberCoilPainter(episode.thumbnail),
+                    contentDescription = stringResource(R.string.podcast_thumbnail),
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.size(64.dp),
+                )
 
                 Column(
                     verticalArrangement = Arrangement.Center,
@@ -133,19 +132,19 @@ fun PodcastBottomViewContent(episode: Episode) {
                     )
                 }
 
-                Box(
-                    modifier = Modifier.padding(end = 8.dp)
-                ) {
-                    IconButton(
-                        imageVector = Icons.Rounded.PlayArrow,
-                        contentDescription = stringResource(R.string.play),
-                        padding = 6.dp,
-                        tint = MaterialTheme.colors.onBackground,
-                        modifier = Modifier.size(40.dp)
-                    ) {
-                        podcastPlayer.tooglePlaybackState()
-                    }
-                }
+                Icon(
+                    painter = painterResource(iconResId),
+                    contentDescription = stringResource(R.string.play),
+                    tint = MaterialTheme.colors.onBackground,
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .size(40.dp)
+                        .clip(CircleShape)
+                        .clickable {
+                            podcastPlayer.tooglePlaybackState()
+                        }
+                        .padding(6.dp)
+                )
             }
         }
     }

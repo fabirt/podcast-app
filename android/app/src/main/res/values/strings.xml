@@ -14,4 +14,5 @@
     <string name="playback_notification_channel_name">Podcasts</string>
     <string name="playback_notification_channel_description">Playback notification for Listen Notes</string>
     <string name="pause">Pause</string>
+    <string name="close">Close</string>
 </resources>

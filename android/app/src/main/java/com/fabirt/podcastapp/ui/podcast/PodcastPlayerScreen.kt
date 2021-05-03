@@ -9,7 +9,7 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -114,7 +114,8 @@ private fun Content(episode: Episode, backDispatcher: OnBackPressedDispatcher) {
                     modifier = Modifier
                         .background(
                             Brush.verticalGradient(
-                                listOf(gradientColor, MaterialTheme.colors.background)
+                                listOf(gradientColor, MaterialTheme.colors.background),
+                                endY = LocalConfiguration.current.screenHeightDp.toFloat() * LocalDensity.current.density / 2
                             )
                         )
                         .fillMaxSize()
@@ -122,8 +123,8 @@ private fun Content(episode: Episode, backDispatcher: OnBackPressedDispatcher) {
                 ) {
                     Column {
                         IconButton(
-                            imageVector = Icons.Rounded.Close,
-                            contentDescription = "close"
+                            imageVector = Icons.Rounded.KeyboardArrowDown,
+                            contentDescription = stringResource(R.string.close)
                         ) {
                             podcastPlayer.showPlayerFullScreen = false
                         }

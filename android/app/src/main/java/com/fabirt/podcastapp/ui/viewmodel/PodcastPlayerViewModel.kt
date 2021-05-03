@@ -63,7 +63,7 @@ class PodcastPlayerViewModel @Inject constructor(
     fun calculateColorPalette(drawable: Drawable, onFinised: (Color) -> Unit) {
         val bitmap = (drawable as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
         Palette.from(bitmap).generate { palette ->
-            palette?.dominantSwatch?.rgb?.let { colorValue ->
+            palette?.darkVibrantSwatch?.rgb?.let { colorValue ->
                 onFinised(Color(colorValue))
             }
         }

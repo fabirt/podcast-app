@@ -26,9 +26,14 @@ val Typography = Typography(
                 fontWeight = FontWeight.Bold,
                 fontSize = 14.sp,
         ),
+        h5 = TextStyle(
+                fontFamily = NunitoSans,
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp,
+        ),
         subtitle1 = TextStyle(
                 fontFamily = NunitoSans,
-                fontWeight = FontWeight.Light,
+                fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
         ),
         body1 = TextStyle(

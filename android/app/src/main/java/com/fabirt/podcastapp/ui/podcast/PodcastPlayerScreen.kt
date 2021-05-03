@@ -14,8 +14,10 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.fabirt.podcastapp.domain.model.Episode
@@ -103,6 +105,24 @@ private fun Content(episode: Episode, backDispatcher: OnBackPressedDispatcher) {
                         PodcastImage(
                             url = episode.image,
                             modifier = Modifier.padding(vertical = 32.dp)
+                        )
+                        Text(
+                            episode.titleOriginal,
+                            style = MaterialTheme.typography.h5,
+                            color = MaterialTheme.colors.onBackground,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+
+                        Text(
+                            episode.podcast.titleOriginal,
+                            style = MaterialTheme.typography.subtitle1,
+                            color = MaterialTheme.colors.onBackground,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.graphicsLayer {
+                                alpha = 0.60f
+                            }
                         )
                     }
                 }

@@ -5,10 +5,7 @@ import androidx.activity.OnBackPressedDispatcher
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
@@ -20,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
 import com.fabirt.podcastapp.domain.model.Episode
 import com.fabirt.podcastapp.ui.common.IconButton
 import com.fabirt.podcastapp.ui.common.ViewModelProvider
@@ -98,6 +96,15 @@ private fun Content(episode: Episode, backDispatcher: OnBackPressedDispatcher) {
                     ) {
                         podcastPlayer.showPlayerFullScreen = false
                     }
+
+                    Column(
+                        modifier = Modifier.padding(horizontal = 24.dp)
+                    ) {
+                        PodcastImage(
+                            url = episode.image,
+                            modifier = Modifier.padding(vertical = 32.dp)
+                        )
+                    }
                 }
             }
         }
@@ -108,6 +115,7 @@ private fun Content(episode: Episode, backDispatcher: OnBackPressedDispatcher) {
 
         onDispose {
             backCallback.remove()
+            podcastPlayer.showPlayerFullScreen = false
         }
     }
 }

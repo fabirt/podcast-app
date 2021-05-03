@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import com.fabirt.podcastapp.constant.K
 import com.fabirt.podcastapp.data.exoplayer.PodcastMediaSource
 import com.fabirt.podcastapp.domain.model.Episode
+import com.fabirt.podcastapp.util.currentPosition
 
 class MediaPlayerServiceConnection(
     context: Context,
@@ -40,6 +41,18 @@ class MediaPlayerServiceConnection(
     fun playPodcast(episodes: List<Episode>) {
         mediaSource.setEpisodes(episodes)
         mediaBrowser.sendCustomAction(K.START_MEDIA_PLAYBACK_ACTION, null, null)
+    }
+
+    fun fastForward(seconds: Int = 10) {
+        playbackState.value?.currentPosition?.let { currentPosition ->
+            transportControls.seekTo(currentPosition + seconds * 1000)
+        }
+    }
+
+    fun rewind(seconds: Int = 10) {
+        playbackState.value?.currentPosition?.let { currentPosition ->
+            transportControls.seekTo(currentPosition - seconds * 1000)
+        }
     }
 
     fun subscribe(parentId: String, callback: MediaBrowserCompat.SubscriptionCallback) {

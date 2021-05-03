@@ -69,6 +69,14 @@ class PodcastPlayerViewModel @Inject constructor(
         }
     }
 
+    fun fastForward() {
+        serviceConnection.fastForward()
+    }
+
+    fun rewind() {
+        serviceConnection.rewind()
+    }
+
     override fun onCleared() {
         super.onCleared()
         serviceConnection.unsubscribe(

@@ -2,15 +2,19 @@ package com.fabirt.podcastapp.ui.podcast
 
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
+import androidx.annotation.DrawableRes
 import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
@@ -94,6 +98,8 @@ fun PodcastPlayerBody(episode: Episode, backDispatcher: OnBackPressedDispatcher)
 
     val imagePainter = rememberCoilPainter(request = imageRequest)
 
+    val iconResId =
+        if (podcastPlayer.podcastIsPlaying) R.drawable.ic_round_pause else R.drawable.ic_round_play_arrow
 
     Box(
         modifier = Modifier
@@ -115,7 +121,17 @@ fun PodcastPlayerBody(episode: Episode, backDispatcher: OnBackPressedDispatcher)
             episode = episode,
             imagePainter = imagePainter,
             gradientColor = gradientColor,
-            yOffset = swipeableState.offset.value.roundToInt()
+            yOffset = swipeableState.offset.value.roundToInt(),
+            playPauseIcon = iconResId,
+            onRewind = {
+                podcastPlayer.rewind()
+            },
+            onForward = {
+                podcastPlayer.fastForward()
+            },
+            onTooglePlayback = {
+                podcastPlayer.tooglePlaybackState()
+            }
         ) {
             podcastPlayer.showPlayerFullScreen = false
         }
@@ -137,6 +153,10 @@ fun PodcastPlayerSatelessContent(
     imagePainter: Painter,
     gradientColor: Color,
     yOffset: Int,
+    @DrawableRes playPauseIcon: Int,
+    onRewind: () -> Unit,
+    onForward: () -> Unit,
+    onTooglePlayback: () -> Unit,
     onClose: () -> Unit
 ) {
     Box(
@@ -200,6 +220,44 @@ fun PodcastPlayerSatelessContent(
                                 alpha = 0.60f
                             }
                         )
+
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceAround,
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 16.dp),
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_round_replay_10),
+                                contentDescription = stringResource(R.string.replay_10_seconds),
+                                modifier = Modifier
+                                    .clip(CircleShape)
+                                    .clickable(onClick = onRewind)
+                                    .padding(12.dp)
+                                    .size(32.dp)
+                            )
+                            Icon(
+                                painter = painterResource(playPauseIcon),
+                                contentDescription = stringResource(R.string.play),
+                                tint = MaterialTheme.colors.background,
+                                modifier = Modifier
+                                    .clip(CircleShape)
+                                    .background(MaterialTheme.colors.onBackground)
+                                    .clickable(onClick = onTooglePlayback)
+                                    .size(64.dp)
+                                    .padding(8.dp)
+                            )
+                            Icon(
+                                painter = painterResource(R.drawable.ic_round_forward_10),
+                                contentDescription = stringResource(R.string.forward_10_seconds),
+                                modifier = Modifier
+                                    .clip(CircleShape)
+                                    .clickable(onClick = onForward)
+                                    .padding(12.dp)
+                                    .size(32.dp)
+                            )
+                        }
                     }
                 }
             }
@@ -228,9 +286,12 @@ fun PodcastPlayerPreview() {
             ),
             imagePainter = painterResource(id = R.drawable.ic_microphone),
             gradientColor = Color.DarkGray,
-            yOffset = 0
-        ) {
-
-        }
+            yOffset = 0,
+            playPauseIcon = R.drawable.ic_round_play_arrow,
+            onClose = { },
+            onForward = { },
+            onRewind = { },
+            onTooglePlayback = { }
+        )
     }
 }

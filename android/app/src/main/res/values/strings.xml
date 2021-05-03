@@ -15,4 +15,6 @@
     <string name="playback_notification_channel_description">Playback notification for Listen Notes</string>
     <string name="pause">Pause</string>
     <string name="close">Close</string>
+    <string name="replay_10_seconds">Replay 10 seconds</string>
+    <string name="forward_10_seconds">Forward 10 seconds</string>
 </resources>

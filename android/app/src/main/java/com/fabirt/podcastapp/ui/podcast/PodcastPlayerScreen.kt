@@ -104,6 +104,12 @@ fun PodcastPlayerBody(episode: Episode, backDispatcher: OnBackPressedDispatcher)
     val iconResId =
         if (podcastPlayer.podcastIsPlaying) R.drawable.ic_round_pause else R.drawable.ic_round_play_arrow
 
+    var sliderIsChanging by remember { mutableStateOf(false) }
+
+    var localSliderValue by remember { mutableStateOf(0f) }
+
+    val sliderProgress = if (sliderIsChanging) localSliderValue else podcastPlayer.currentEpisodeProgress
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -127,7 +133,7 @@ fun PodcastPlayerBody(episode: Episode, backDispatcher: OnBackPressedDispatcher)
             gradientColor = gradientColor,
             yOffset = swipeableState.offset.value.roundToInt(),
             playPauseIcon = iconResId,
-            playbackProgress = podcastPlayer.currentEpisodeProgress,
+            playbackProgress = sliderProgress,
             currentTime = podcastPlayer.currentPlaybackFormattedPosition,
             totalTime = podcastPlayer.currentEpisodeFormattedDuration,
             onRewind = {
@@ -138,6 +144,13 @@ fun PodcastPlayerBody(episode: Episode, backDispatcher: OnBackPressedDispatcher)
             },
             onTooglePlayback = {
                 podcastPlayer.tooglePlaybackState()
+            },
+            onSliderChange = { newPosition ->
+                sliderIsChanging = true
+                localSliderValue = newPosition
+            },
+            onSliderChangeFinished = {
+                sliderIsChanging = false
             }
         ) {
             podcastPlayer.showPlayerFullScreen = false
@@ -172,6 +185,8 @@ fun PodcastPlayerSatelessContent(
     onRewind: () -> Unit,
     onForward: () -> Unit,
     onTooglePlayback: () -> Unit,
+    onSliderChange: (Float) -> Unit,
+    onSliderChangeFinished: () -> Unit,
     onClose: () -> Unit
 ) {
     val gradientColors = if (darkTheme) {
@@ -261,10 +276,11 @@ fun PodcastPlayerSatelessContent(
                         ) {
                             Slider(
                                 value = playbackProgress,
-                                onValueChange = {},
                                 modifier = Modifier
                                     .fillMaxWidth(),
-                                colors = sliderColors
+                                colors = sliderColors,
+                                onValueChange = onSliderChange,
+                                onValueChangeFinished = onSliderChangeFinished,
                             )
 
                             Row(
@@ -351,7 +367,9 @@ fun PodcastPlayerPreview() {
             onClose = { },
             onForward = { },
             onRewind = { },
-            onTooglePlayback = { }
+            onTooglePlayback = { },
+            onSliderChange = { },
+            onSliderChangeFinished = { }
         )
     }
 }

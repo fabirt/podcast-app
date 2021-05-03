@@ -1,6 +1,9 @@
 package com.fabirt.podcastapp.ui.viewmodel
 
 import android.support.v4.media.MediaBrowserCompat
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.fabirt.podcastapp.constant.K
 import com.fabirt.podcastapp.data.service.MediaPlayerServiceConnection
@@ -17,6 +20,8 @@ class PodcastPlayerViewModel @Inject constructor(
 
     val currentPlayingEpisode = serviceConnection.currentPlayingEpisode
     val playbackState = serviceConnection.playbackState
+
+    var showPlayerFullScreen by mutableStateOf(false)
 
     val podcastisPlaying: Boolean
         get() = playbackState.value?.isPlaying == true

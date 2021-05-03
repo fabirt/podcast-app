@@ -2,6 +2,7 @@ package com.fabirt.podcastapp.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -23,6 +24,7 @@ import com.fabirt.podcastapp.ui.navigation.Navigator
 import com.fabirt.podcastapp.ui.navigation.ProvideNavHostController
 import com.fabirt.podcastapp.ui.podcast.PodcastBottomView
 import com.fabirt.podcastapp.ui.podcast.PodcastDetailScreen
+import com.fabirt.podcastapp.ui.podcast.PodcastPlayerScreen
 import com.fabirt.podcastapp.ui.theme.PodcastAppTheme
 import com.fabirt.podcastapp.ui.welcome.WelcomeScreen
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -39,15 +41,20 @@ class MainActivity : ComponentActivity() {
         if (intent?.action == K.ACTION_PODCAST_NOTIFICATION_CLICK) {
             startDestination = Destination.home
         }
+
         setContent {
-            PodcastApp(startDestination = startDestination)
+            PodcastApp(
+                startDestination = startDestination,
+                backDispatcher = onBackPressedDispatcher
+            )
         }
     }
 }
 
 @Composable
 fun PodcastApp(
-    startDestination: String = Destination.welcome
+    startDestination: String = Destination.welcome,
+    backDispatcher: OnBackPressedDispatcher
 ) {
     PodcastAppTheme {
         ProvideWindowInsets {
@@ -72,6 +79,7 @@ fun PodcastApp(
                         PodcastBottomView(
                             modifier = Modifier.align(Alignment.BottomCenter)
                         )
+                        PodcastPlayerScreen(backDispatcher)
                     }
                 }
             }

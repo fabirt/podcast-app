@@ -8,6 +8,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
@@ -121,6 +122,7 @@ fun PodcastPlayerBody(episode: Episode, backDispatcher: OnBackPressedDispatcher)
 
         PodcastPlayerSatelessContent(
             episode = episode,
+            darkTheme = isSystemInDarkTheme(),
             imagePainter = imagePainter,
             gradientColor = gradientColor,
             yOffset = swipeableState.offset.value.roundToInt(),
@@ -166,11 +168,29 @@ fun PodcastPlayerSatelessContent(
     playbackProgress: Float,
     currentTime: String,
     totalTime: String,
+    darkTheme: Boolean,
     onRewind: () -> Unit,
     onForward: () -> Unit,
     onTooglePlayback: () -> Unit,
     onClose: () -> Unit
 ) {
+    val gradientColors = if (darkTheme) {
+        listOf(gradientColor, MaterialTheme.colors.background)
+    } else {
+        listOf(MaterialTheme.colors.background, MaterialTheme.colors.background)
+    }
+
+    val sliderColors = if (darkTheme) {
+        SliderDefaults.colors(
+            thumbColor = MaterialTheme.colors.onBackground,
+            activeTrackColor = MaterialTheme.colors.onBackground,
+            inactiveTrackColor = MaterialTheme.colors.onBackground.copy(
+                alpha = IndicatorBackgroundOpacity
+            ),
+        )
+    } else SliderDefaults.colors()
+
+
     Box(
         modifier = Modifier
             .offset { IntOffset(0, yOffset) }
@@ -181,7 +201,7 @@ fun PodcastPlayerSatelessContent(
                 modifier = Modifier
                     .background(
                         Brush.verticalGradient(
-                            listOf(gradientColor, MaterialTheme.colors.background),
+                            colors = gradientColors,
                             endY = LocalConfiguration.current.screenHeightDp.toFloat() * LocalDensity.current.density / 2
                         )
                     )
@@ -244,11 +264,7 @@ fun PodcastPlayerSatelessContent(
                                 onValueChange = {},
                                 modifier = Modifier
                                     .fillMaxWidth(),
-                                colors = SliderDefaults.colors(
-                                    thumbColor = MaterialTheme.colors.onBackground,
-                                    activeTrackColor = MaterialTheme.colors.onBackground,
-                                    inactiveTrackColor = MaterialTheme.colors.onBackground.copy(alpha = IndicatorBackgroundOpacity),
-                                )
+                                colors = sliderColors
                             )
 
                             Row(
@@ -330,7 +346,8 @@ fun PodcastPlayerPreview() {
             playPauseIcon = R.drawable.ic_round_play_arrow,
             playbackProgress = 0f,
             currentTime = "0:00",
-            totalTime=  "10:00",
+            totalTime = "10:00",
+            darkTheme = true,
             onClose = { },
             onForward = { },
             onRewind = { },

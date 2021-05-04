@@ -30,7 +30,7 @@ class PodcastDetailViewModel @Inject constructor() : ViewModel() {
     }
 
     fun openListenNotesURL(context: Context, episode: Episode) {
-        val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse(episode.listennotesURL))
+        val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse(episode.link))
         context.startActivity(webIntent)
     }
 }

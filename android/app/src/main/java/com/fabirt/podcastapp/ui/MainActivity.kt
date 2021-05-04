@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navDeepLink
 import com.fabirt.podcastapp.R
 import com.fabirt.podcastapp.constant.K
 import com.fabirt.podcastapp.ui.common.ProvideMultiViewModel
@@ -67,7 +68,10 @@ fun PodcastApp(
                                 HomeScreen()
                             }
 
-                            composable(Destination.podcast) { backStackEntry ->
+                            composable(
+                                Destination.podcast,
+                                deepLinks = listOf(navDeepLink { uriPattern = "https://www.listennotes.com/e/{id}" })
+                            ) { backStackEntry ->
                                 PodcastDetailScreen(
                                     podcastId = backStackEntry.arguments?.getString("id")!!,
                                 )

@@ -36,7 +36,7 @@ class PodcastSearchViewModel @Inject constructor(
     fun searchPodcasts() {
         viewModelScope.launch {
             podcastSearch = Resource.Loading
-            val result = repository.searchPodcasts("android", "episode")
+            val result = repository.searchPodcasts("fiction", "episode")
             result.fold(
                 { failure ->
                     podcastSearch = Resource.Error(failure)

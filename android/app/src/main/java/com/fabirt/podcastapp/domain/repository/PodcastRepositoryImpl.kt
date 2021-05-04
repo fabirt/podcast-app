@@ -1,6 +1,5 @@
 package com.fabirt.podcastapp.domain.repository
 
-import android.util.Log
 import com.fabirt.podcastapp.data.datastore.PodcastDataStore
 import com.fabirt.podcastapp.data.network.service.PodcastService
 import com.fabirt.podcastapp.domain.model.PodcastSearch
@@ -24,7 +23,6 @@ class PodcastRepositoryImpl(
     ): Either<Failure, PodcastSearch> {
         return try {
             val canFetchAPI = dataStore.canFetchAPI()
-            Log.i(TAG, canFetchAPI.toString())
             if (canFetchAPI) {
                 val result = service.searchPodcasts(query, type).asDomainModel()
                 dataStore.storePodcastSearchResult(result)
@@ -33,7 +31,6 @@ class PodcastRepositoryImpl(
                 right(dataStore.readLastPodcastSearchResult())
             }
         } catch (e: Exception) {
-            Log.e("PodcastRepositoryImpl", e.toString() + " " + e.stackTraceToString())
             left(Failure.UnexpectedFailure)
         }
     }

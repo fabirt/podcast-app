@@ -54,7 +54,7 @@ class MediaPlayerNotificationManager(
             setUseStopAction(true)
             setUseNextActionInCompactView(true)
             setUsePreviousActionInCompactView(true)
-            setControlDispatcher(DefaultControlDispatcher())
+            setControlDispatcher(DefaultControlDispatcher(0L, 0L))
         }
     }
 

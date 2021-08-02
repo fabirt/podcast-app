@@ -35,6 +35,7 @@
         <entry key="app/src/main/res/drawable/gradient_launcher.xml" value="0.22592592592592592" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.22592592592592592" />
         <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.22592592592592592" />
+        <entry key="app/src/main/res/drawable/ic_microphone.xml" value="0.2015625" />
         <entry key="app/src/main/res/drawable/ic_music_file.xml" value="0.22592592592592592" />
         <entry key="app/src/main/res/drawable/ic_podcast.xml" value="0.22592592592592592" />
         <entry key="app/src/main/res/drawable/launch_image.xml" value="0.1638888888888889" />
@@ -49,5 +50,8 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="SuppressKotlinCodeStyleNotification">
+    <option name="disableForAll" value="true" />
   </component>
 </project>

@@ -121,7 +121,7 @@ class PodcastPlayerViewModel @Inject constructor(
     }
 
     private fun formatLong(value: Long): String {
-        val dateFormat = SimpleDateFormat("mm:ss", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
         return dateFormat.format(value)
     }
 

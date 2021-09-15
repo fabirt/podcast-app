@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../../layout/compose-model-1624834853298.xml" value="0.1" />
         <entry key="../../../../../layout/compose-model-1619833702118.xml" value="0.2504222972972973" />
         <entry key="../../../../../layout/compose-model-1619842042136.xml" value="0.22592592592592592" />
         <entry key="../../../../../layout/compose-model-1619843467423.xml" value="0.22592592592592592" />
@@ -34,6 +35,7 @@
         <entry key="app/src/main/res/drawable/gradient_launcher.xml" value="0.22592592592592592" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.22592592592592592" />
         <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.22592592592592592" />
+        <entry key="app/src/main/res/drawable/ic_microphone.xml" value="0.2015625" />
         <entry key="app/src/main/res/drawable/ic_music_file.xml" value="0.22592592592592592" />
         <entry key="app/src/main/res/drawable/ic_podcast.xml" value="0.22592592592592592" />
         <entry key="app/src/main/res/drawable/launch_image.xml" value="0.1638888888888889" />
@@ -42,10 +44,14 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="SuppressKotlinCodeStyleNotification">
+    <option name="disableForAll" value="true" />
   </component>
 </project>

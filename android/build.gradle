@@ -1,21 +1,23 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        compose_version = '1.0.0-beta05'
-        accompanist_version = '0.8.1'
+        kotlin_version = '1.5.10' // Compose Compiler dictates Kotlin version now!
+        kotlin_coroutines_version = '1.5.0'
+        compose_version = '1.0.0'
+        accompanist_version = '0.12.0'
         room_version = "2.2.6"
-        hilt_version = "2.35"
+        hilt_version = "2.37"
         retrofit_version = "2.9.0"
-        exo_player_version = "2.13.3"
-        glide_version = "4.11.0"
+        exo_player_version = "2.14.1"
+        glide_version = "4.12.0"
     }
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:7.0.0-alpha15"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.32"
+        classpath 'com.android.tools.build:gradle:7.0.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
     }

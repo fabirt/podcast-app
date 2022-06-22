@@ -122,6 +122,7 @@ class PodcastPlayerViewModel @Inject constructor(
 
     private fun formatLong(value: Long): String {
         val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+        dateFormat.timeZone = TimeZone.getTimeZone("GMT+0")
         return dateFormat.format(value)
     }
 
